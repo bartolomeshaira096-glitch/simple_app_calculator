@@ -35,6 +35,16 @@ class ScientificCalculatorApplication(CalculatorCore):
 
         self.window.mainloop()
 
+# ---------------- SCIENTIFIC FUNCTIONS ----------------
+    def sin_deg(self, x):
+        return math.sin(math.radians(x))
+
+    def cos_deg(self, x):
+        return math.cos(math.radians(x))
+
+    def tan_deg(self, x):
+        return math.tan(math.radians(x))
+
  # ---------------- UI SETUP ----------------
     def build_user_interface(self):
 
@@ -86,7 +96,7 @@ class ScientificCalculatorApplication(CalculatorCore):
         # BUTTON LAYOUT
         button_layout = [
             ["AC", "⌫", "(", ")", "%"],
-            ["sin", "cos", "tan", "log", "ln"],
+            ["sin(", "cos(", "tan(", "log(", "ln("],
             ["√", "π", "e", "**", "/"],
             ["7", "8", "9", "*", "-"],
             ["4", "5", "6", "+", "Ans"],
@@ -98,40 +108,16 @@ class ScientificCalculatorApplication(CalculatorCore):
             "AC": self.clear_expression,
             "⌫": self.delete_last_character,
             "=": self.calculate_expression,
-            "√": lambda: self.insert_expression("math.sqrt("),
+            "√": lambda: self.insert_expression("sqrt("),
             "π": lambda: self.insert_expression(str(math.pi)),
             "e": lambda: self.insert_expression(str(math.e)),
-            "power": lambda: self.insert_expression("**"),
-            "add": lambda: self.insert_expression("+"),
-            "subtract": lambda: self.insert_expression("-"),
-            "multiply": lambda: self.insert_expression("*"),
-            "divide": lambda: self.insert_expression("/"),
-            "modulus": lambda: self.insert_expression("%"),
-            "answer": self.insert_last_answer,
-            "sine": lambda: self.apply_scientific_function("sin"),
-            "cosine": lambda: self.apply_scientific_function("cos"),
-            "tangent": lambda: self.apply_scientific_function("tan"),
-            "logarithm": lambda: self.apply_scientific_function("log"),
-            "natural_log": lambda: self.apply_scientific_function("ln"),
-            "zero": lambda: self.insert_expression("0"),
-            "one": lambda: self.insert_expression("1"),
-            "two": lambda: self.insert_expression("2"),
-            "three": lambda: self.insert_expression("3"),
-            "four": lambda: self.insert_expression("4"),
-            "five": lambda: self.insert_expression("5"),
-            "six": lambda: self.insert_expression("6"),
-            "seven": lambda: self.insert_expression("7"),
-            "eight": lambda: self.insert_expression("8"),
-            "nine": lambda: self.insert_expression("9"),
-            "decimal": lambda: self.insert_expression("."),
-            "open_parenthesis": lambda: self.insert_expression("("),
-            "close_parenthesis": lambda: self.insert_expression(")")
+            "Ans": self.insert_last_answer,
         }
 
         for row_index, row_items in enumerate(button_layout):
             for column_index, button_name in enumerate(row_items):
 
-                button_action = button_actions.get(
+                action = button_actions.get(
                     button_name,
                     lambda value=button_name: self.insert_expression(value)
                 )
@@ -142,7 +128,7 @@ class ScientificCalculatorApplication(CalculatorCore):
                     font=("Arial", 10),
                     bg="#2b2b2b",
                     fg="white",
-                    command=button_action
+                    command=action
                 ).grid(
                     row=row_index + 1,
                     column=column_index,
@@ -162,8 +148,8 @@ class ScientificCalculatorApplication(CalculatorCore):
         self.expression_display.delete(0, tk.END)
         self.expression_display.insert(0, self.current_expression)
 
-    def insert_expression(self, value_to_insert):
-        self.current_expression += str(value_to_insert)
+    def insert_expression(self, value):
+        self.current_expression += str(value)
         self.update_expression_display()
 
     def clear_expression(self):
@@ -181,50 +167,36 @@ class ScientificCalculatorApplication(CalculatorCore):
     # ---------------- CALCULATION ----------------
     def calculate_expression(self):
         try:
-            computed_result = eval(self.current_expression)
-            self.last_answer_value = computed_result
+            expression = self.current_expression
+
+            safe_dict = {
+                "__builtins__": None,
+                "sin": self.sin_deg,
+                "cos": self.cos_deg,
+                "tan": self.tan_deg,
+                "log": math.log10,
+                "ln": math.log,
+                "sqrt": math.sqrt,
+                "pi": math.pi,
+                "e": math.e
+            }
+
+            result = eval(expression, safe_dict)
+
+            self.last_answer_value = result
 
             self.history_listbox.insert(
                 tk.END,
-                f"{self.current_expression} = {computed_result}"
+                f"{expression} = {result}"
             )
 
-            self.current_expression = str(computed_result)
+            self.current_expression = str(result)
             self.update_expression_display()
 
-        except:
+        except Exception as error:
             self.current_expression = "Error"
             self.update_expression_display()
-
-    # ---------------- SCIENTIFIC FUNCTIONS ----------------
-    def apply_scientific_function(self, function_name):
-        try:
-            numeric_value = eval(self.current_expression)
-
-            if function_name == "sin":
-                result_value = math.sin(math.radians(numeric_value))
-            elif function_name == "cos":
-                result_value = math.cos(math.radians(numeric_value))
-            elif function_name == "tan":
-                result_value = math.tan(math.radians(numeric_value))
-            elif function_name == "log":
-                result_value = math.log10(numeric_value)
-            elif function_name == "ln":
-                result_value = math.log(numeric_value)
-            else:
-                result_value = numeric_value
-
-            self.history_listbox.insert(
-                tk.END,
-                f"{function_name}({numeric_value}) = {result_value}"
-            )
-
-            self.current_expression = str(result_value)
-            self.update_expression_display()
-
-        except:
-            self.current_expression = "Error"
-            self.update_expression_display()
+            print("DEBUG ERROR:", error)
 
 # ---------------- PROGRAM ENTRY POINT ----------------
 def main():
