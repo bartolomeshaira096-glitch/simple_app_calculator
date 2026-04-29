@@ -81,3 +81,4 @@ class ScientificCalculatorApplication(CalculatorCore):
             fg="white",
             font=("Consolas", 10)
         )
+        self.history_listbox.pack(fill="both", expand=True)
