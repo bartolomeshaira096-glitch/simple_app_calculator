@@ -195,7 +195,7 @@ class ScientificCalculatorApplication(CalculatorCore):
         except:
             self.current_expression = "Error"
             self.update_expression_display()
-            
+
     # ---------------- SCIENTIFIC FUNCTIONS ----------------
     def apply_scientific_function(self, function_name):
         try:
@@ -225,6 +225,13 @@ class ScientificCalculatorApplication(CalculatorCore):
         except:
             self.current_expression = "Error"
             self.update_expression_display()
+
+# ---------------- PROGRAM ENTRY POINT ----------------
+def main():
+    scientific_calculator_application = ScientificCalculatorApplication()
+    return scientific_calculator_application
+
+main()
 
 
 
