@@ -127,3 +127,12 @@ class ScientificCalculatorApplication(CalculatorCore):
             "open_parenthesis": lambda: self.insert_expression("("),
             "close_parenthesis": lambda: self.insert_expression(")")
         }
+
+        for row_index, row_items in enumerate(button_layout):
+            for column_index, button_name in enumerate(row_items):
+
+                button_action = button_actions.get(
+                    button_name,
+                    lambda value=button_name: self.insert_expression(value)
+                )
+
