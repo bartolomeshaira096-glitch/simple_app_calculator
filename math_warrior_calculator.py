@@ -64,3 +64,20 @@ class ScientificCalculatorApplication(CalculatorCore):
             padx=5,
             pady=5
         )
+
+        # HISTORY TITLE
+        history_title_label = tk.Label(
+            history_frame,
+            text="HISTORY",
+            bg="#111111",
+            fg="white",
+            font=("Arial", 12, "bold")
+        )
+        history_title_label.pack()
+
+        self.history_listbox = tk.Listbox(
+            history_frame,
+            bg="#1e1e1e",
+            fg="white",
+            font=("Consolas", 10)
+        )
