@@ -82,3 +82,14 @@ class ScientificCalculatorApplication(CalculatorCore):
             font=("Consolas", 10)
         )
         self.history_listbox.pack(fill="both", expand=True)
+
+        # BUTTON LAYOUT
+        button_layout = [
+            ["AC", "⌫", "(", ")", "%"],
+            ["sin", "cos", "tan", "log", "ln"],
+            ["√", "π", "e", "**", "/"],
+            ["7", "8", "9", "*", "-"],
+            ["4", "5", "6", "+", "Ans"],
+            ["1", "2", "3", ".", "="],
+            ["0"]
+        ]
