@@ -136,3 +136,18 @@ class ScientificCalculatorApplication(CalculatorCore):
                     lambda value=button_name: self.insert_expression(value)
                 )
 
+                tk.Button(
+                    calculator_frame,
+                    text=button_name,
+                    font=("Arial", 10),
+                    bg="#2b2b2b",
+                    fg="white",
+                    command=button_action
+                ).grid(
+                    row=row_index + 1,
+                    column=column_index,
+                    sticky="nsew",
+                    padx=2,
+                    pady=2
+                )
+
