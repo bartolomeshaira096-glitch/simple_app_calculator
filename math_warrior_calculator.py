@@ -151,3 +151,10 @@ class ScientificCalculatorApplication(CalculatorCore):
                     pady=2
                 )
 
+        for column_index in range(5):
+            calculator_frame.columnconfigure(column_index, weight=1)
+
+        for row_index in range(8):
+            calculator_frame.rowconfigure(row_index, weight=1)
+
+
