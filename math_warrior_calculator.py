@@ -93,3 +93,37 @@ class ScientificCalculatorApplication(CalculatorCore):
             ["1", "2", "3", ".", "="],
             ["0"]
         ]
+
+        button_actions = {
+            "AC": self.clear_expression,
+            "⌫": self.delete_last_character,
+            "=": self.calculate_expression,
+            "√": lambda: self.insert_expression("math.sqrt("),
+            "π": lambda: self.insert_expression(str(math.pi)),
+            "e": lambda: self.insert_expression(str(math.e)),
+            "power": lambda: self.insert_expression("**"),
+            "add": lambda: self.insert_expression("+"),
+            "subtract": lambda: self.insert_expression("-"),
+            "multiply": lambda: self.insert_expression("*"),
+            "divide": lambda: self.insert_expression("/"),
+            "modulus": lambda: self.insert_expression("%"),
+            "answer": self.insert_last_answer,
+            "sine": lambda: self.apply_scientific_function("sin"),
+            "cosine": lambda: self.apply_scientific_function("cos"),
+            "tangent": lambda: self.apply_scientific_function("tan"),
+            "logarithm": lambda: self.apply_scientific_function("log"),
+            "natural_log": lambda: self.apply_scientific_function("ln"),
+            "zero": lambda: self.insert_expression("0"),
+            "one": lambda: self.insert_expression("1"),
+            "two": lambda: self.insert_expression("2"),
+            "three": lambda: self.insert_expression("3"),
+            "four": lambda: self.insert_expression("4"),
+            "five": lambda: self.insert_expression("5"),
+            "six": lambda: self.insert_expression("6"),
+            "seven": lambda: self.insert_expression("7"),
+            "eight": lambda: self.insert_expression("8"),
+            "nine": lambda: self.insert_expression("9"),
+            "decimal": lambda: self.insert_expression("."),
+            "open_parenthesis": lambda: self.insert_expression("("),
+            "close_parenthesis": lambda: self.insert_expression(")")
+        }
