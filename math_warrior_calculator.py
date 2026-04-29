@@ -157,4 +157,43 @@ class ScientificCalculatorApplication(CalculatorCore):
         for row_index in range(8):
             calculator_frame.rowconfigure(row_index, weight=1)
 
+    # ---------------- DISPLAY CONTROL ----------------
+    def update_expression_display(self):
+        self.expression_display.delete(0, tk.END)
+        self.expression_display.insert(0, self.current_expression)
+
+    def insert_expression(self, value_to_insert):
+        self.current_expression += str(value_to_insert)
+        self.update_expression_display()
+
+    def clear_expression(self):
+        self.current_expression = ""
+        self.update_expression_display()
+
+    def delete_last_character(self):
+        self.current_expression = self.current_expression[:-1]
+        self.update_expression_display()
+
+    def insert_last_answer(self):
+        self.current_expression += str(self.last_answer_value)
+        self.update_expression_display()
+
+    # ---------------- CALCULATION ----------------
+    def calculate_expression(self):
+        try:
+            computed_result = eval(self.current_expression)
+            self.last_answer_value = computed_result
+
+            self.history_listbox.insert(
+                tk.END,
+                f"{self.current_expression} = {computed_result}"
+            )
+
+            self.current_expression = str(computed_result)
+            self.update_expression_display()
+
+        except:
+            self.current_expression = "Error"
+            self.update_expression_display()
+
 
