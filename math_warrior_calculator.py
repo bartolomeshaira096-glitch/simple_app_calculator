@@ -47,3 +47,20 @@ class ScientificCalculatorApplication(CalculatorCore):
 
         history_frame = tk.Frame(self.window, bg="#111111")
         history_frame.grid(row=0, column=1, sticky="nsew")
+
+        # DISPLAY
+        self.expression_display = tk.Entry(
+            calculator_frame,
+            font=("Consolas", 22),
+            bg="#000000",
+            fg="white",
+            justify="right"
+        )
+        self.expression_display.grid(
+            row=0,
+            column=0,
+            columnspan=5,
+            sticky="nsew",
+            padx=5,
+            pady=5
+        )
