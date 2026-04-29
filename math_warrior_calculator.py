@@ -195,5 +195,36 @@ class ScientificCalculatorApplication(CalculatorCore):
         except:
             self.current_expression = "Error"
             self.update_expression_display()
+            
+    # ---------------- SCIENTIFIC FUNCTIONS ----------------
+    def apply_scientific_function(self, function_name):
+        try:
+            numeric_value = eval(self.current_expression)
+
+            if function_name == "sin":
+                result_value = math.sin(math.radians(numeric_value))
+            elif function_name == "cos":
+                result_value = math.cos(math.radians(numeric_value))
+            elif function_name == "tan":
+                result_value = math.tan(math.radians(numeric_value))
+            elif function_name == "log":
+                result_value = math.log10(numeric_value)
+            elif function_name == "ln":
+                result_value = math.log(numeric_value)
+            else:
+                result_value = numeric_value
+
+            self.history_listbox.insert(
+                tk.END,
+                f"{function_name}({numeric_value}) = {result_value}"
+            )
+
+            self.current_expression = str(result_value)
+            self.update_expression_display()
+
+        except:
+            self.current_expression = "Error"
+            self.update_expression_display()
+
 
 
