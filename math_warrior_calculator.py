@@ -34,3 +34,16 @@ class ScientificCalculatorApplication(CalculatorCore):
         self.build_user_interface()
 
         self.window.mainloop()
+
+ # ---------------- UI SETUP ----------------
+    def build_user_interface(self):
+
+        self.window.columnconfigure(0, weight=3)
+        self.window.columnconfigure(1, weight=2)
+        self.window.rowconfigure(0, weight=1)
+
+        calculator_frame = tk.Frame(self.window, bg="#1e1e1e")
+        calculator_frame.grid(row=0, column=0, sticky="nsew")
+
+        history_frame = tk.Frame(self.window, bg="#111111")
+        history_frame.grid(row=0, column=1, sticky="nsew")
