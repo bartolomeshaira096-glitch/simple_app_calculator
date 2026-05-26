@@ -204,6 +204,3 @@ def main():
     return scientific_calculator_application
 
 main()
-
-
-
