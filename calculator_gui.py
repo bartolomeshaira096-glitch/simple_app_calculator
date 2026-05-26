@@ -9,8 +9,8 @@ class CalculatorGUI(CalculatorCore, ScientificCalculator):
         self.window.title("Math Warrior Calculator")
 
         self.window.geometry("380x600")
-        self.window.minsize(350, 550)
         self.window.resizable(True, True)
+        self.window.minsize(320, 500)
 
         self.current_expression = ""
         self.last_answer_value = 0
@@ -28,6 +28,14 @@ class CalculatorGUI(CalculatorCore, ScientificCalculator):
 
         history_frame = tk.Frame(self.window, bg="#111111")
         history_frame.grid(row=0, column=1, sticky="nsew")
+
+        calculator_frame.rowconfigure(0, weight=1)
+
+        for i in range(8):
+            calculator_frame.rowconfigure(i, weight=1)
+
+        for i in range(5):
+            calculator_frame.columnconfigure(i, weight=1)
 
         self.display = tk.Entry(
             calculator_frame,
