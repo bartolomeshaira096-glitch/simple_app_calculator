@@ -76,3 +76,23 @@ class CalculatorGUI(CalculatorCore, ScientificCalculator):
                     bg="#2b2b2b",
                     fg="white"
                 ).grid(row=r + 1, column=c, sticky="nsew")
+
+    def add(self, value):
+        self.current_expression += str(value)
+        self.update_display()
+
+    def clear(self):
+        self.current_expression = ""
+        self.update_display()
+
+    def backspace(self):
+        self.current_expression = self.current_expression[:-1]
+        self.update_display()
+
+    def use_last_answer(self):
+        self.current_expression += str(self.last_answer_value)
+        self.update_display()
+
+    def update_display(self):
+        self.display.delete(0, tk.END)
+        self.display.insert(0, self.current_expression)
