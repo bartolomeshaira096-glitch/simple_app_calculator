@@ -44,3 +44,35 @@ class CalculatorGUI(CalculatorCore, ScientificCalculator):
             fg="white"
         )
         self.history.pack(fill="both", expand=True)
+
+        buttons = [
+            ["AC", "⌫", "(", ")", "%"],
+            ["sin(", "cos(", "tan(", "log(", "ln("],
+            ["√", "π", "e", "**", "/"],
+            ["7", "8", "9", "*", "-"],
+            ["4", "5", "6", "+", "Ans"],
+            ["1", "2", "3", ".", "="],
+            ["0"]
+        ]
+
+        actions = {
+            "AC": self.clear,
+            "⌫": self.backspace,
+            "=": self.calculate,
+            "√": lambda: self.add("sqrt("),
+            "π": lambda: self.add(str(math.pi)),
+            "e": lambda: self.add(str(math.e)),
+            "Ans": self.use_last_answer
+        }
+
+        for r, row in enumerate(buttons):
+            for c, text in enumerate(row):
+                cmd = actions.get(text, lambda v=text: self.add(v))
+
+                tk.Button(
+                    calculator_frame,
+                    text=text,
+                    command=cmd,
+                    bg="#2b2b2b",
+                    fg="white"
+                ).grid(row=r + 1, column=c, sticky="nsew")
