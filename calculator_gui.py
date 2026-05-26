@@ -96,3 +96,31 @@ class CalculatorGUI(CalculatorCore, ScientificCalculator):
     def update_display(self):
         self.display.delete(0, tk.END)
         self.display.insert(0, self.current_expression)
+
+    def calculate(self):
+        try:
+            safe_dict = {
+                "__builtins__": None,
+                "sin": self.sin_deg,
+                "cos": self.cos_deg,
+                "tan": self.tan_deg,
+                "log": math.log10,
+                "ln": math.log,
+                "sqrt": math.sqrt,
+                "pi": math.pi,
+                "e": math.e
+            }
+
+            result = eval(self.current_expression, safe_dict)
+
+            self.last_answer_value = result
+
+            self.history.insert(tk.END, f"{self.current_expression} = {result}")
+
+            self.current_expression = str(result)
+            self.update_display()
+
+        except Exception as e:
+            self.current_expression = "Error"
+            self.update_display()
+            print("ERROR:", e)
